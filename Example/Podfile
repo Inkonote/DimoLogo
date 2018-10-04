@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DimoLogo_Example' do
+  pod 'DimoLogo', :path => '../'
+
+  target 'DimoLogo_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
