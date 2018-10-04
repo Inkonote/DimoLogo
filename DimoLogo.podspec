@@ -31,12 +31,13 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'DimoLogo/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'DimoLogo' => ['DimoLogo/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'SwiftyTimer', '~> 2.0'
+  s.dependency 'MBProgressHUD', '~> 1.1'
 end

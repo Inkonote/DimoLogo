@@ -7,18 +7,26 @@
 //
 
 import UIKit
+import DimoLogo
 
 class ViewController: UIViewController {
+    
+    private let logoView: DimoLogoView = DimoLogoView()
+    private let logoSize: CGSize = CGSize(width: 60, height: 60)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        logoView.backgroundColor = UIColor.black
+        view.addSubview(logoView)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        logoView.frame = CGRect(origin: CGPoint(x: (view.bounds.width - logoSize.width) / 2.0, y: (view.bounds.height - logoSize.height) / 2.0), size: logoSize)
     }
 
+    @IBAction func onBlockThread(_ sender: Any) {
+        sleep(2)
+    }
 }
 
