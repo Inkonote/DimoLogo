@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftyTimer
 
 extension ClosedRange {
     var length: CGFloat {
@@ -31,6 +30,8 @@ public class DimoLogoView: UIView {
     
     static let LineMarginHorizontal: CGFloat = 5.0
     
+    private var displayLink: DisplayLinkWrapper?
+    
     private var popAnimationFinishedTime: CGFloat = 0
     private var repopAnimationFinishedTime: CGFloat = 0
     private var moveAnimationFinishedTime: CGFloat = 0
@@ -43,6 +44,28 @@ public class DimoLogoView: UIView {
     private var lineStretchFinishedTime: CGFloat = 0
     private var lineStretch2FinishedTime: CGFloat = 0
     private var lineStretch3FinishedTime: CGFloat = 0
+    
+    private class DisplayLinkWrapper {
+        private weak var target: AnyObject?
+        private var selector: Selector
+        private var displayLink: CADisplayLink?
+        
+        init(target: AnyObject, selector: Selector) {
+            self.target = target
+            self.selector = selector
+            displayLink = CADisplayLink(target: self, selector: #selector(fire))
+            displayLink?.frameInterval = 3
+            displayLink?.add(to: .main, forMode: .commonModes)
+        }
+        
+        @objc private func fire() {
+            _ = target?.perform(selector)
+        }
+        
+        func invalidate() {
+            displayLink?.invalidate()
+        }
+    }
     
     var animationDuration: CGFloat = 1.2 {
         didSet {
@@ -62,20 +85,15 @@ public class DimoLogoView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
         updateTimes()
-        Timer.every(50.ms) { [weak self] in
-            self?.time += 0.05
-            if let animationDuration = self?.animationDuration,
-                let animationInterval = self?.animationInterval,
-                let time = self?.time,
-                time > animationDuration + animationInterval {
-                self?.time = 0
-            }
-            self?.setNeedsDisplay()
-        }
+        displayLink = DisplayLinkWrapper(target: self, selector: #selector(fire))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        displayLink?.invalidate()
     }
     
     override public var intrinsicContentSize: CGSize {
@@ -213,6 +231,14 @@ public class DimoLogoView: UIView {
         waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: -DimoLogoView.WaterDropArcRadius), controlPoint: arcCenter.offset(offsetX: -DimoLogoView.WaterDropArcRadius, offsetY: -4))
         
         return waterDrop
+    }
+    
+    @objc private func fire() {
+        time += 0.05
+        if time > animationDuration + animationInterval {
+            self.time = 0
+        }
+        setNeedsDisplay()
     }
     
 }
