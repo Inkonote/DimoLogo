@@ -11,8 +11,14 @@ import DimoLogo
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var contentView: UIView!
     private let logoView: DimoLogoView = DimoLogoView()
-    private let logoSize: CGSize = CGSize(width: 60, height: 60)
+    private let baseLogoSize: CGSize = CGSize(width: 60, height: 60)
+    private var logoSize: CGSize {
+        return CGSize(width: baseLogoSize.width * CGFloat(sizeSlider.value), height: baseLogoSize.height * CGFloat(sizeSlider.value))
+    }
+    @IBOutlet weak var sizeSlider: UISlider!
+    @IBOutlet weak var sizeLabel: UILabel!
     private let colors: [UIColor] = [.white, .gray, .red, .yellow]
     private var colorIndex: Int = 0
 
@@ -21,14 +27,19 @@ class ViewController: UIViewController {
         logoView.backgroundColor = .black
         logoView.foregroundColor = colors[colorIndex]
         logoView.play()
-        view.addSubview(logoView)
+        contentView.addSubview(logoView)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        logoView.frame = CGRect(origin: CGPoint(x: (view.bounds.width - logoSize.width) / 2.0, y: (view.bounds.height - logoSize.height) / 2.0), size: logoSize)
+        logoView.frame = CGRect(origin: CGPoint(x: (contentView.bounds.width - logoSize.width) / 2.0, y: (contentView.bounds.height - logoSize.height) / 2.0), size: logoSize)
     }
-
+    
+    @IBAction func onSizeChange(_ sender: UISlider) {
+        view.setNeedsLayout()
+        sizeLabel.text = "Size: \(String(format: "%.1f", sender.value))"
+    }
+    
     @IBAction func onPlay(_ sender: Any) {
         logoView.play()
     }
