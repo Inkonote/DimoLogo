@@ -77,7 +77,13 @@ public class DimoLogoView: UIView {
     
     var elemMaxInterval: CGFloat = 14
     var bounceSize: CGFloat = 1
-    var foregroundColor: UIColor = UIColor.white
+    public var foregroundColor: UIColor = UIColor.white {
+        didSet {
+            if displayLink == nil {
+                setNeedsDisplay()
+            }
+        }
+    }
     var lineStretchLengths: [CGFloat] = [12, -8, 6]
     var animationInterval: CGFloat = 0.15
     
@@ -85,7 +91,6 @@ public class DimoLogoView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
         updateTimes()
-        displayLink = DisplayLinkWrapper(target: self, selector: #selector(fire))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,11 +98,23 @@ public class DimoLogoView: UIView {
     }
     
     deinit {
-        displayLink?.invalidate()
+        stop()
     }
     
     override public var intrinsicContentSize: CGSize {
         return CGSize(width: 60, height: 60)
+    }
+    
+    public func play() {
+        guard displayLink == nil else {
+            return
+        }
+        displayLink = DisplayLinkWrapper(target: self, selector: #selector(fire))
+    }
+    
+    public func stop() {
+        displayLink?.invalidate()
+        displayLink = nil
     }
     
     private func updateTimes() {

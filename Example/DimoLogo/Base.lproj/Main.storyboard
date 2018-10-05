@@ -21,18 +21,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-df-aGR">
-                                <rect key="frame" x="125.5" y="587" width="124" height="30"/>
-                                <state key="normal" title="Block main thread"/>
-                                <connections>
-                                    <action selector="onBlockThread:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pRb-Wq-vOb"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1nO-09-j9R">
+                                <rect key="frame" x="125.5" y="497" width="124" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgm-BP-pka">
+                                        <rect key="frame" x="0.0" y="0.0" width="124" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="onPlay:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bqj-RW-IuX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bar-gh-v58">
+                                        <rect key="frame" x="0.0" y="30" width="124" height="30"/>
+                                        <state key="normal" title="Stop"/>
+                                        <connections>
+                                            <action selector="onStop:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dTd-AK-4dY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofz-b4-vEz">
+                                        <rect key="frame" x="0.0" y="60" width="124" height="30"/>
+                                        <state key="normal" title="Change Color"/>
+                                        <connections>
+                                            <action selector="onChangeColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Xjm-Te-TOY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-df-aGR">
+                                        <rect key="frame" x="0.0" y="90" width="124" height="30"/>
+                                        <state key="normal" title="Block main thread"/>
+                                        <connections>
+                                            <action selector="onBlockThread:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pRb-Wq-vOb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="C2u-df-aGR" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="5K6-Wj-o8z"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="C2u-df-aGR" secondAttribute="bottom" constant="50" id="Ubt-Y7-gUF"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="1nO-09-j9R" secondAttribute="bottom" constant="50" id="3Qz-UZ-tjN"/>
+                            <constraint firstItem="1nO-09-j9R" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="QKF-UU-Ds2"/>
                         </constraints>
                     </view>
                 </viewController>
