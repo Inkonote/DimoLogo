@@ -22,11 +22,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6he-v6-Wla">
-                                <rect key="frame" x="16" y="20" width="343" height="447"/>
+                                <rect key="frame" x="16" y="20" width="343" height="417"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1nO-09-j9R">
-                                <rect key="frame" x="16" y="467" width="343" height="150"/>
+                                <rect key="frame" x="16" y="437" width="343" height="180"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3Sp-C0-qAg">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -45,29 +45,36 @@
                                             </slider>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgm-BP-pka">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sM6-qf-IRj">
                                         <rect key="frame" x="0.0" y="30" width="343" height="30"/>
+                                        <state key="normal" title="Show HUD"/>
+                                        <connections>
+                                            <action selector="onShowHUD:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="g47-Ng-BNe"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgm-BP-pka">
+                                        <rect key="frame" x="0.0" y="60" width="343" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="onPlay:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bqj-RW-IuX"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bar-gh-v58">
-                                        <rect key="frame" x="0.0" y="60" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="90" width="343" height="30"/>
                                         <state key="normal" title="Stop"/>
                                         <connections>
                                             <action selector="onStop:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dTd-AK-4dY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofz-b4-vEz">
-                                        <rect key="frame" x="0.0" y="90" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="120" width="343" height="30"/>
                                         <state key="normal" title="Change Color"/>
                                         <connections>
                                             <action selector="onChangeColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Xjm-Te-TOY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-df-aGR">
-                                        <rect key="frame" x="0.0" y="120" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="150" width="343" height="30"/>
                                         <state key="normal" title="Block main thread"/>
                                         <connections>
                                             <action selector="onBlockThread:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pRb-Wq-vOb"/>

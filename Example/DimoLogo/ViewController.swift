@@ -8,6 +8,7 @@
 
 import UIKit
 import DimoLogo
+import MBProgressHUD
 
 class ViewController: UIViewController {
     
@@ -33,6 +34,19 @@ class ViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         logoView.frame = CGRect(origin: CGPoint(x: (contentView.bounds.width - logoSize.width) / 2.0, y: (contentView.bounds.height - logoSize.height) / 2.0), size: logoSize)
+    }
+    
+    @IBAction func onShowHUD(_ sender: Any) {
+        MBProgressHUD.showDimoHUDAdded(to: view, title: nil, animated: true)
+        if #available(iOS 10.0, *) {
+            Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { (_) in
+                MBProgressHUD(for: self.view)?.hide(animated: true)
+                let hud = MBProgressHUD.showDimoHUDAdded(to: self.view, title: "Nothing", animated: true)
+                hud.hide(animated: true, afterDelay: 3.0)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     @IBAction func onSizeChange(_ sender: UISlider) {

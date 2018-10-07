@@ -17,6 +17,7 @@ private class DimoHUD: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
         addSubview(logoView)
+        logoView.play()
         
         textLabel.font = UIFont.systemFont(ofSize: 13)
         textLabel.textColor = UIColor.white
@@ -35,14 +36,18 @@ private class DimoHUD: UIView {
         super.layoutSubviews()
         logoView.frame = CGRect(x: (bounds.width - 60) / 2.0, y: 16, width: 60, height: 60)
         textLabel.sizeToFit()
-        textLabel.frame = CGRect(origin: CGPoint(x: (bounds.width - textLabel.bounds.width) / 2.0, y: logoView.frame.maxY + 8), size: textLabel.bounds.size)
+        let textWidth = min(bounds.width - 12.0, textLabel.bounds.width)
+        textLabel.frame = CGRect(x: (bounds.width - textWidth) / 2.0,
+                                 y: logoView.frame.maxY + 12,
+                                 width: textWidth,
+                                 height: textLabel.bounds.height)
     }
 }
 
 public extension MBProgressHUD {
     
     @discardableResult
-    public class func showDimoHUDAdded(to view: UIView, title: String, animated: Bool) -> MBProgressHUD {
+    public class func showDimoHUDAdded(to view: UIView, title: String?, animated: Bool) -> MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
         hud.bezelView.style = .solidColor
         hud.bezelView.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8)
