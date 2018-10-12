@@ -34,7 +34,14 @@ private class DimoHUD: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        logoView.frame = CGRect(x: (bounds.width - 60) / 2.0, y: 16, width: 60, height: 60)
+        let logoMarginTop: CGFloat
+        if textLabel.text?.isEmpty ?? true {
+            logoMarginTop = 28.0
+        } else {
+            logoMarginTop = 16.0
+        }
+        logoView.frame = CGRect(x: (bounds.width - 60) / 2.0, y: logoMarginTop, width: 60, height: 60)
+        
         textLabel.sizeToFit()
         let textWidth = min(bounds.width - 12.0, textLabel.bounds.width)
         textLabel.frame = CGRect(x: (bounds.width - textWidth) / 2.0,
