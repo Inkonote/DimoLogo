@@ -228,6 +228,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -287,7 +288,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DimoLogo_Example/Pods-DimoLogo_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DimoLogo_Example/Pods-DimoLogo_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DimoLogo/DimoLogo.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 			);
@@ -298,7 +299,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DimoLogo_Example/Pods-DimoLogo_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DimoLogo_Example/Pods-DimoLogo_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E81B76097E5DD75E74436D08 /* [CP] Check Pods Manifest.lock */ = {
@@ -480,7 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = sh.tyy.DimoLogo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -496,7 +497,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = sh.tyy.DimoLogo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -518,7 +519,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DimoLogo_Example.app/DimoLogo_Example";
 			};
 			name = Debug;
@@ -537,7 +538,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DimoLogo_Example.app/DimoLogo_Example";
 			};
 			name = Release;

@@ -68,7 +68,7 @@ public class DimoLogoView: UIView {
             self.selector = selector
             displayLink = CADisplayLink(target: self, selector: #selector(fire))
             displayLink?.frameInterval = 3
-            displayLink?.add(to: .main, forMode: .commonModes)
+            displayLink?.add(to: .main, forMode: .common)
         }
         
         @objc private func fire() {

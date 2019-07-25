@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DimoLogo'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = '滴墨书摘(Inkonote) logo.'
 
 # This description is used to generate tags and improve search results.
@@ -21,14 +21,16 @@ Pod::Spec.new do |s|
 #TODO: Add long description of the pod here.
                        #DESC
 
-  s.homepage         = 'https://github.com/luckytianyiyan/DimoLogo'
+  s.homepage         = 'https://github.com/ty0x2333/DimoLogo'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'luckytianyiyan' => 'luckytianyiyan@gmail.com' }
-  s.source           = { :git => 'https://github.com/luckytianyiyan/DimoLogo.git', :tag => s.version.to_s }
+  s.author           = { 'ty0x2333' => 'ty0x2333@gmail.com' }
+  s.source           = { :git => 'https://github.com/ty0x2333/DimoLogo.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/luckytianyiyan'
 
   s.ios.deployment_target = '8.0'
+
+  s.swift_version = '5'
 
   s.source_files = 'DimoLogo/Classes/**/*'
 
