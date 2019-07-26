@@ -54,7 +54,7 @@ private class DimoHUD: UIView {
 public extension MBProgressHUD {
     
     @discardableResult
-    public class func showDimoHUDAdded(to view: UIView, title: String?, animated: Bool) -> MBProgressHUD {
+    class func showDimoHUDAdded(to view: UIView, title: String?, animated: Bool) -> MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
         hud.bezelView.style = .solidColor
         hud.bezelView.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.8)
