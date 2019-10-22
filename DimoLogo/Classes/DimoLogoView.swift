@@ -86,7 +86,29 @@ public class DimoLogoView: UIView {
         }
     }
     
-    private var time: CGFloat = 0
+    public var progress: CGFloat {
+        set {
+            stop()
+            let progress: CGFloat = max(0, min(newValue, 1.0))
+            time = animationDuration * progress
+            setNeedsDisplay()
+        }
+        get {
+            guard animationDuration > 0 else {
+                return 0.0
+            }
+            let timeProgress = time / animationDuration
+            return max(0, min(timeProgress, 1.0))
+        }
+    }
+    
+    private var time: CGFloat = 0 {
+        didSet {
+            if time > animationDuration + animationInterval {
+                time = 0
+            }
+        }
+    }
     
     public var foregroundColor: UIColor = UIColor.white {
         didSet {
@@ -286,9 +308,6 @@ public class DimoLogoView: UIView {
     
     @objc private func fire() {
         time += 0.05
-        if time > animationDuration + animationInterval {
-            self.time = 0
-        }
         setNeedsDisplay()
     }
     

@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var sizeSlider: UISlider!
     @IBOutlet weak var sizeLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
     private let colors: [UIColor] = [.white, .gray, .red, .yellow]
     private var colorIndex: Int = 0
 
@@ -52,6 +53,11 @@ class ViewController: UIViewController {
     @IBAction func onSizeChange(_ sender: UISlider) {
         view.setNeedsLayout()
         sizeLabel.text = "Size: \(String(format: "%.1f", sender.value))"
+    }
+    
+    @IBAction func onProgressChange(_ sender: UISlider) {
+        logoView.progress = CGFloat(sender.value)
+        progressLabel.text = "Progress: \(String(format: "%.1f", sender.value))"
     }
     
     @IBAction func onPlay(_ sender: Any) {
