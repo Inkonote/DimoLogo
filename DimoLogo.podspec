@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DimoLogo'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = '滴墨书摘(Inkonote) logo.'
 
 # This description is used to generate tags and improve search results.
