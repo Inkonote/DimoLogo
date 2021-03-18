@@ -175,31 +175,7 @@ public class DimoLogoView: UIView {
         foregroundColor.setFill()
         foregroundColor.setStroke()
         waterDrop.draw(bounds: bounds, lineWidth: line.width, time: time, context: context)
-        drawLine(time: time)
-    }
-
-    private func drawLine(time: CGFloat) {
-        let centerPoint = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
-        let lineLength = bounds.width - 2 * line.marginHorizontal
-        var midLineCenterPoint = centerPoint
-        let maxOffsets: [CGFloat] = line.stretchLengths
-        
-        if let index = line.stretchTimeRanges.firstIndex(where: { $0.contains(time) }) {
-            let range = line.stretchTimeRanges[index]
-            let maxOffset = maxOffsets[index]
-            let elapsed = time - range.lowerBound
-            var progress = elapsed / range.length
-            if progress > 0.5 {
-                progress = abs(1 - progress)
-            }
-            midLineCenterPoint.y += maxOffset * progress
-        }
-
-        let midLinePoints = LinePoints(left: CGPoint(x: centerPoint.x - lineLength / 2.0, y: centerPoint.y), center: midLineCenterPoint, right: CGPoint(x: centerPoint.x + lineLength / 2.0, y: centerPoint.y))
-
-        let topLinePoints: LinePoints = midLinePoints.offsetting(y: -line.width / 2.0)
-        let bottomLinePoints: LinePoints = midLinePoints.offsetting(y: line.width / 2.0)
-        line.draw(topLinePoints: topLinePoints, bottomLinePoints: bottomLinePoints)
+        line.draw(bounds: bounds, time: time)
     }
 
     @objc private func fire() {

@@ -102,7 +102,31 @@ struct Line {
     var stretchLengths: [CGFloat] = [12, -8, 6]
     var stretchTimeRanges: [ClosedRange<CGFloat>] = []
     
-    func draw(topLinePoints: LinePoints, bottomLinePoints: LinePoints) {
+    func draw(bounds: CGRect, time: CGFloat) {
+        let centerPoint = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
+        let lineLength = bounds.width - 2 * marginHorizontal
+        var midLineCenterPoint = centerPoint
+        let maxOffsets: [CGFloat] = stretchLengths
+        
+        if let index = stretchTimeRanges.firstIndex(where: { $0.contains(time) }) {
+            let range = stretchTimeRanges[index]
+            let maxOffset = maxOffsets[index]
+            let elapsed = time - range.lowerBound
+            var progress = elapsed / range.length
+            if progress > 0.5 {
+                progress = abs(1 - progress)
+            }
+            midLineCenterPoint.y += maxOffset * progress
+        }
+
+        let midLinePoints = LinePoints(left: CGPoint(x: centerPoint.x - lineLength / 2.0, y: centerPoint.y), center: midLineCenterPoint, right: CGPoint(x: centerPoint.x + lineLength / 2.0, y: centerPoint.y))
+
+        let topLinePoints: LinePoints = midLinePoints.offsetting(y: -width / 2.0)
+        let bottomLinePoints: LinePoints = midLinePoints.offsetting(y: width / 2.0)
+        draw(topLinePoints: topLinePoints, bottomLinePoints: bottomLinePoints)
+    }
+    
+    private func draw(topLinePoints: LinePoints, bottomLinePoints: LinePoints) {
         let linePath = UIBezierPath()
         linePath.lineJoinStyle = .miter
 
