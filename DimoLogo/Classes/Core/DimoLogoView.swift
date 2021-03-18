@@ -297,7 +297,6 @@ public class DimoLogoView: UIView {
     @objc private func fire() {
         time += 0.05
         setNeedsDisplay()
-        print("fire")
     }
     
 }
