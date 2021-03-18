@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
   Inkonote(滴墨书摘) logo view.
                        DESC
 
-  s.homepage         = 'https://github.com/ty0x2333/DimoLogo'
+  s.homepage         = 'https://github.com/Inkonote/DimoLogo'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ty0x2333' => 'ty0x2333@gmail.com' }
-  s.source           = { :git => 'https://github.com/ty0x2333/DimoLogo.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Inkonote/DimoLogo.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/ty0x2333'
 
   s.ios.deployment_target = '10.0'
