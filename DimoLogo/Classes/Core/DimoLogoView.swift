@@ -152,17 +152,25 @@ public class DimoLogoView: UIView {
     }
 
     private func updateTimes() {
-        waterDrop.animationTimeRange.expand = 0.0...(animationDuration * 0.125)
-        waterDrop.animationTimeRange.shrink = waterDrop.animationTimeRange.expand.upperBound...(animationDuration * 0.15)
+        waterDrop.animationTimeRange.setPop(startExpand: 0,
+                                            startShrink: (animationDuration * 0.125),
+                                            endShrink: (animationDuration * 0.15))
 
-        waterDrop.animationTimeRange.standing = 0...waterDrop.animationTimeRange.shrink.upperBound
-        waterDrop.animationTimeRange.move = waterDrop.animationTimeRange.shrink.upperBound...(animationDuration * 0.85)
+        waterDrop.animationTimeRange.setMove(startStand: 0,
+                                             startMove: waterDrop.animationTimeRange.shrink.upperBound,
+                                             endMove: (animationDuration * 0.85))
 
-        waterDrop.animationTimeRange.round = 0...(animationDuration * 0.5)
-        waterDrop.animationTimeRange.stretch = waterDrop.animationTimeRange.round.upperBound...(animationDuration * 0.875)
+        waterDrop.animationTimeRange.setDeform(start: 0,
+                                               startStretch: animationDuration * 0.5,
+                                               endStretch: animationDuration * 0.875)
+
         waterDrop.animationTimeRange.fadeIn = (animationDuration * 0.8)...(animationDuration * 1)
 
-        let lineStretchTimes = [animationDuration * 0.5, animationDuration * 0.8, animationDuration * 0.9, animationDuration * 1]
+        let lineStretchTimes = [animationDuration * 0.5,
+                                animationDuration * 0.8,
+                                animationDuration * 0.9,
+                                animationDuration * 1]
+        
         line.stretchTimeRanges = [lineStretchTimes[0]...lineStretchTimes[1],
                                   lineStretchTimes[1]...lineStretchTimes[2],
                                   lineStretchTimes[2]...lineStretchTimes[3]]

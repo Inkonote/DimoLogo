@@ -12,8 +12,10 @@ struct LinePoints {
     let center: CGPoint
     let right: CGPoint
 
-    func offsetting(y: CGFloat) -> LinePoints {
-        return LinePoints(left: left.offset(offsetY: y), center: center.offset(offsetY: y), right: right.offset(offsetY: y))
+    func offsettingY(_ offsetY: CGFloat) -> LinePoints {
+        return LinePoints(left: left.offset(offsetY: offsetY),
+                          center: center.offset(offsetY: offsetY),
+                          right: right.offset(offsetY: offsetY))
     }
 }
 
@@ -22,14 +24,29 @@ struct WaterDrop {
     struct AnimationTimeRange {
         var fadeIn: ClosedRange<CGFloat> = 0...0
 
-        var expand: ClosedRange<CGFloat> = 0...0
-        var shrink: ClosedRange<CGFloat> = 0...0
+        private(set) var expand: ClosedRange<CGFloat> = 0...0
+        private(set) var shrink: ClosedRange<CGFloat> = 0...0
 
-        var standing: ClosedRange<CGFloat> = 0...0
-        var move: ClosedRange<CGFloat> = 0...0
+        private(set) var stand: ClosedRange<CGFloat> = 0...0
+        private(set) var move: ClosedRange<CGFloat> = 0...0
 
-        var round: ClosedRange<CGFloat> = 0...0
-        var stretch: ClosedRange<CGFloat> = 0...0
+        private(set) var round: ClosedRange<CGFloat> = 0...0
+        private(set) var stretch: ClosedRange<CGFloat> = 0...0
+        
+        mutating func setPop(startExpand: CGFloat, startShrink: CGFloat, endShrink: CGFloat) {
+            expand = startExpand...startShrink
+            shrink = startShrink...endShrink
+        }
+        
+        mutating func setMove(startStand: CGFloat, startMove: CGFloat, endMove: CGFloat) {
+            stand = startStand...startMove
+            move = startMove...endMove
+        }
+        
+        mutating func setDeform(start: CGFloat, startStretch: CGFloat, endStretch: CGFloat) {
+            round = start...startStretch
+            stretch = startStretch...endStretch
+        }
     }
 
     var bounceSize: CGFloat = 1
@@ -41,11 +58,12 @@ struct WaterDrop {
     var controlPointOffsetY: CGFloat = 4.0
 
     func draw(bounds: CGRect, lineWidth: CGFloat, time: CGFloat, context: CGContext) {
-        var arcCenter = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0 - elemMaxInterval - (arcRadius + lineWidth) / 2.0)
+        var arcCenter = CGPoint(x: bounds.width / 2.0,
+                                y: bounds.height / 2.0 - elemMaxInterval - (arcRadius + lineWidth) / 2.0)
         var alpha: CGFloat = 1
 
         // move
-        if !animationTimeRange.standing.contains(time) {
+        if !animationTimeRange.stand.contains(time) {
             let elapsed = time - animationTimeRange.move.lowerBound
             let distance: CGFloat = 2 * (bounds.height / 2.0 - arcCenter.y)
             arcCenter.y += distance * min(1, elapsed / animationTimeRange.move.length)
@@ -73,7 +91,8 @@ struct WaterDrop {
             }
 
             let elapsed = time - animationTimeRange.stretch.lowerBound
-            path(progress: min(1, elapsed / animationTimeRange.stretch.length), arcCenter: arcCenter).fill(with: .normal, alpha: alpha)
+            path(progress: min(1, elapsed / animationTimeRange.stretch.length), arcCenter: arcCenter)
+                .fill(with: .normal, alpha: alpha)
         }
     }
 
@@ -87,10 +106,12 @@ struct WaterDrop {
 
         let waterDrop = UIBezierPath()
         waterDrop.move(to: waterDropTop)
-        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: arcRadius), controlPoint: arcCenter.offset(offsetX: arcRadius, offsetY: -controlPointOffsetY))
+        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: arcRadius),
+                               controlPoint: arcCenter.offset(offsetX: arcRadius, offsetY: -controlPointOffsetY))
         waterDrop.addArc(withCenter: arcCenter, radius: arcRadius, startAngle: 0, endAngle: CGFloat.pi, clockwise: true)
         waterDrop.move(to: waterDropTop)
-        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: -arcRadius), controlPoint: arcCenter.offset(offsetX: -arcRadius, offsetY: -controlPointOffsetY))
+        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: -arcRadius),
+                               controlPoint: arcCenter.offset(offsetX: -arcRadius, offsetY: -controlPointOffsetY))
 
         return waterDrop
     }
@@ -119,10 +140,12 @@ struct Line {
             midLineCenterPoint.y += maxOffset * progress
         }
 
-        let midLinePoints = LinePoints(left: CGPoint(x: centerPoint.x - lineLength / 2.0, y: centerPoint.y), center: midLineCenterPoint, right: CGPoint(x: centerPoint.x + lineLength / 2.0, y: centerPoint.y))
+        let midLinePoints = LinePoints(left: CGPoint(x: centerPoint.x - lineLength / 2.0, y: centerPoint.y),
+                                       center: midLineCenterPoint,
+                                       right: CGPoint(x: centerPoint.x + lineLength / 2.0, y: centerPoint.y))
 
-        let topLinePoints: LinePoints = midLinePoints.offsetting(y: -width / 2.0)
-        let bottomLinePoints: LinePoints = midLinePoints.offsetting(y: width / 2.0)
+        let topLinePoints: LinePoints = midLinePoints.offsettingY(-width / 2.0)
+        let bottomLinePoints: LinePoints = midLinePoints.offsettingY(width / 2.0)
         draw(topLinePoints: topLinePoints, bottomLinePoints: bottomLinePoints)
     }
     
