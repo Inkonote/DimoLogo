@@ -33,20 +33,51 @@ struct LinePoints {
     }
 }
 
+struct WaterDrop {
+    
+    var popTimeRange: ClosedRange<CGFloat> = 0...0
+    var repopTimeRange: ClosedRange<CGFloat> = 0...0
+    
+    var standingTimeRange: ClosedRange<CGFloat> = 0...0
+    var moveTimeRange: ClosedRange<CGFloat> = 0...0
+    
+    var roundTimeRange: ClosedRange<CGFloat> = 0...0
+    var stretchTimeRange: ClosedRange<CGFloat> = 0...0
+    
+    var arcRadius: CGFloat = 5.0
+    var stretchLength: CGFloat = 4.0
+    var controlPointOffsetY: CGFloat = 4.0
+    
+    /// Get water drop 💧 UIBezierPath
+    /// - Parameters:
+    ///   - process: water drop animation progress
+    ///   - arcCenter: water drop center
+    /// - Returns: water drop  bezier path
+    func path(progress: CGFloat, arcCenter: CGPoint) -> UIBezierPath {
+        let waterDropTop = arcCenter.offset(offsetY: -arcRadius - stretchLength * progress)
+        
+        let waterDrop = UIBezierPath()
+        waterDrop.move(to: waterDropTop)
+        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: arcRadius), controlPoint: arcCenter.offset(offsetX: arcRadius, offsetY: -controlPointOffsetY))
+        waterDrop.addArc(withCenter: arcCenter, radius: arcRadius, startAngle: 0, endAngle: CGFloat.pi, clockwise: true)
+        waterDrop.move(to: waterDropTop)
+        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: -arcRadius), controlPoint: arcCenter.offset(offsetX: -arcRadius, offsetY: -controlPointOffsetY))
+        
+        return waterDrop
+    }
+}
+
 public class DimoLogoView: UIView {
     private static let BaseReference: CGFloat = 60.0
-    private static let WaterDropArcRadiusRatio: CGFloat = 1.0 / 12.0
-    private static let WaterDropControlPointOffsetYRatio: CGFloat = 1.0 / 15.0
-    private static let WaterDropStretchLengthRatio: CGFloat = 1.0 / 15.0
+    private static let arcRadiusRatio: CGFloat = 1.0 / 12.0
+    private static let controlPointOffsetYRatio: CGFloat = 1.0 / 15.0
+    private static let stretchLengthRatio: CGFloat = 1.0 / 15.0
     private static let WaterDropElemMaxIntervalRatio: CGFloat = 7.0 / 30.0
     private static let LineMarginHorizontalRatio: CGFloat = 1.0 / 12.0
     private static let LineWidthRatio: CGFloat = 1.0 / 20.0
     private static let BounceSizeRatio: CGFloat = 1.0 / 60.0
     private static let LineStretchLengthsRatio: [CGFloat] = [0.2, 2.0 / 15.0, 0.1]
     
-    private var waterDropArcRadius: CGFloat = 5.0
-    private var waterDropControlPointOffsetY: CGFloat = 4.0
-    private var waterDropStretchLength: CGFloat = 4.0
     private var waterDropElemMaxInterval: CGFloat = 14.0
     private var lineMarginHorizontal: CGFloat = 5.0
     private var lineWidth: CGFloat = 3.0
@@ -55,16 +86,10 @@ public class DimoLogoView: UIView {
     
     private var displayLink: DisplayLinkWrapper?
     
-    private var popAnimationTimeRange: ClosedRange<CGFloat> = 0...0
-    private var repopAnimationTimeRange: ClosedRange<CGFloat> = 0...0
-    
-    private var waterDropNoMoveTimeRange: ClosedRange<CGFloat> = 0...0
-    private var waterDropMoveTimeRange: ClosedRange<CGFloat> = 0...0
-    
-    private var waterDropStretchTimeRange: ClosedRange<CGFloat> = 0...0
     private var fadeInTimeRange: ClosedRange<CGFloat> = 0...0
     
     private var lineStretchTimes: [CGFloat] = [0, 0, 0, 0]
+    private var waterDrop: WaterDrop = WaterDrop()
     
     private class DisplayLinkWrapper {
         private weak var target: AnyObject?
@@ -162,9 +187,9 @@ public class DimoLogoView: UIView {
         var reference: CGFloat = min(bounds.width, bounds.height)
         reference = max(reference, Self.BaseReference)
         
-        waterDropArcRadius = reference * Self.WaterDropArcRadiusRatio
-        
-        waterDropStretchLength = reference * Self.WaterDropStretchLengthRatio
+        waterDrop.arcRadius = reference * Self.arcRadiusRatio
+        waterDrop.stretchLength = reference * Self.stretchLengthRatio
+        waterDrop.controlPointOffsetY = reference * Self.controlPointOffsetYRatio
         
         lineMarginHorizontal = reference * Self.LineMarginHorizontalRatio
         
@@ -174,21 +199,20 @@ public class DimoLogoView: UIView {
         
         lineStretchLengths = Self.LineStretchLengthsRatio.map { $0 * reference }
         
-        waterDropControlPointOffsetY = reference * Self.WaterDropControlPointOffsetYRatio
-        
         waterDropElemMaxInterval = reference * Self.WaterDropElemMaxIntervalRatio
         
         setNeedsDisplay()
     }
     
     private func updateTimes() {
-        popAnimationTimeRange = 0.0...animationDuration * 0.125
-        repopAnimationTimeRange = popAnimationTimeRange.upperBound...(animationDuration * 0.15)
+        waterDrop.popTimeRange = 0.0...(animationDuration * 0.125)
+        waterDrop.repopTimeRange = waterDrop.popTimeRange.upperBound...(animationDuration * 0.15)
         
-        waterDropNoMoveTimeRange = 0...repopAnimationTimeRange.upperBound
-        waterDropMoveTimeRange = repopAnimationTimeRange.upperBound...animationDuration * 0.85
+        waterDrop.standingTimeRange = 0...waterDrop.repopTimeRange.upperBound
+        waterDrop.moveTimeRange = waterDrop.repopTimeRange.upperBound...(animationDuration * 0.85)
         
-        waterDropStretchTimeRange = (animationDuration * 0.5)...(animationDuration * 0.875)
+        waterDrop.roundTimeRange = 0...(animationDuration * 0.5)
+        waterDrop.stretchTimeRange = waterDrop.roundTimeRange.upperBound...(animationDuration * 0.875)
         fadeInTimeRange = (animationDuration * 0.8)...(animationDuration * 1)
         
         lineStretchTimes = [animationDuration * 0.5, animationDuration * 0.8, animationDuration * 0.9, animationDuration * 1]
@@ -205,28 +229,27 @@ public class DimoLogoView: UIView {
     }
     
     private func drawWaterDrop(time: CGFloat, context: CGContext) {
-        var arcCenter = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0 - waterDropElemMaxInterval - (waterDropArcRadius + lineWidth) / 2.0)
-        let noStretchRange = 0.0...waterDropStretchTimeRange.lowerBound
+        var arcCenter = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0 - waterDropElemMaxInterval - (waterDrop.arcRadius + lineWidth) / 2.0)
         var alpha: CGFloat = 1
         
         // move
-        if !waterDropNoMoveTimeRange.contains(time) {
-            let elapsed = time - waterDropMoveTimeRange.lowerBound
+        if !waterDrop.standingTimeRange.contains(time) {
+            let elapsed = time - waterDrop.moveTimeRange.lowerBound
             let distance: CGFloat = 2 * (bounds.height / 2.0 - arcCenter.y)
-            arcCenter.y += distance * min(1, elapsed / waterDropMoveTimeRange.length)
+            arcCenter.y += distance * min(1, elapsed / waterDrop.moveTimeRange.length)
         }
         
-        var radius = waterDropArcRadius
+        var radius = waterDrop.arcRadius
         
-        if popAnimationTimeRange.contains(time) {
-            let elapsed = time - popAnimationTimeRange.lowerBound
-            radius = (waterDropArcRadius + bounceSize) * elapsed / popAnimationTimeRange.length
-        } else if repopAnimationTimeRange.contains(time) {
-            let elapsed = time - repopAnimationTimeRange.lowerBound
-            radius = waterDropArcRadius + bounceSize * (1 - elapsed / repopAnimationTimeRange.length)
+        if waterDrop.popTimeRange.contains(time) {
+            let elapsed = time - waterDrop.popTimeRange.lowerBound
+            radius = (waterDrop.arcRadius + bounceSize) * elapsed / waterDrop.popTimeRange.length
+        } else if waterDrop.repopTimeRange.contains(time) {
+            let elapsed = time - waterDrop.repopTimeRange.lowerBound
+            radius = waterDrop.arcRadius + bounceSize * (1 - elapsed / waterDrop.repopTimeRange.length)
         }
         
-        if noStretchRange.contains(time) {
+        if waterDrop.roundTimeRange.contains(time) {
             context.addArc(center: arcCenter, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: false)
             context.drawPath(using: .fill)
         } else {
@@ -237,8 +260,8 @@ public class DimoLogoView: UIView {
                 //                print("time: \(time) elapsed: \(elapsed) alpha: \(alpha)")
             }
             
-            let elapsed = time - waterDropStretchTimeRange.lowerBound
-            waterDrop(progress: min(1, elapsed / waterDropStretchTimeRange.length), arcCenter: arcCenter).fill(with: .normal, alpha: alpha)
+            let elapsed = time - waterDrop.stretchTimeRange.lowerBound
+            waterDrop.path(progress: min(1, elapsed / waterDrop.stretchTimeRange.length), arcCenter: arcCenter).fill(with: .normal, alpha: alpha)
         }
     }
     
@@ -283,24 +306,6 @@ public class DimoLogoView: UIView {
         linePath.addLine(to: topLinePoints.left)
         
         linePath.fill()
-    }
-    
-    /// Get water drop 💧 UIBezierPath
-    /// - Parameters:
-    ///   - process: water drop animation progress
-    ///   - arcCenter: water drop center
-    /// - Returns: water drop  bezier path
-    private func waterDrop(progress: CGFloat, arcCenter: CGPoint) -> UIBezierPath {
-        let waterDropTop = arcCenter.offset(offsetY: -waterDropArcRadius - waterDropStretchLength * progress)
-        
-        let waterDrop = UIBezierPath()
-        waterDrop.move(to: waterDropTop)
-        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: waterDropArcRadius), controlPoint: arcCenter.offset(offsetX: waterDropArcRadius, offsetY: -waterDropControlPointOffsetY))
-        waterDrop.addArc(withCenter: arcCenter, radius: waterDropArcRadius, startAngle: 0, endAngle: CGFloat.pi, clockwise: true)
-        waterDrop.move(to: waterDropTop)
-        waterDrop.addQuadCurve(to: arcCenter.offset(offsetX: -waterDropArcRadius), controlPoint: arcCenter.offset(offsetX: -waterDropArcRadius, offsetY: -waterDropControlPointOffsetY))
-        
-        return waterDrop
     }
     
     @objc private func fire() {
