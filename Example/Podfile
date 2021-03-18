@@ -1,11 +1,11 @@
 use_frameworks!
+platform :ios, '10.0'
 
 target 'DimoLogo_Example' do
   pod 'DimoLogo', :path => '../'
+  pod 'DimoLogo/HUD', :path => '../'
 
   target 'DimoLogo_Tests' do
     inherit! :search_paths
-
-    
   end
 end

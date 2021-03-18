@@ -67,7 +67,7 @@ public class DimoLogoView: UIView {
             self.target = target
             self.selector = selector
             displayLink = CADisplayLink(target: self, selector: #selector(fire))
-            displayLink?.frameInterval = 3
+            displayLink?.preferredFramesPerSecond = 20
             displayLink?.add(to: .main, forMode: .common)
         }
         

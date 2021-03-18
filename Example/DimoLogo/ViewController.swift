@@ -39,14 +39,10 @@ class ViewController: UIViewController {
     
     @IBAction func onShowHUD(_ sender: Any) {
         MBProgressHUD.showDimoHUDAdded(to: view, title: nil, animated: true)
-        if #available(iOS 10.0, *) {
-            Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { (_) in
-                MBProgressHUD(for: self.view)?.hide(animated: true)
-                let hud = MBProgressHUD.showDimoHUDAdded(to: self.view, title: "Nothing", animated: true)
-                hud.hide(animated: true, afterDelay: 3.0)
-            }
-        } else {
-            // Fallback on earlier versions
+        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { (_) in
+            MBProgressHUD.forView(self.view)?.hide(animated: true)
+            let hud = MBProgressHUD.showDimoHUDAdded(to: self.view, title: "Nothing", animated: true)
+            hud.hide(animated: true, afterDelay: 3.0)
         }
     }
     

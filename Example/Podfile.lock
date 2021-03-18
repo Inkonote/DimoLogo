@@ -1,13 +1,18 @@
 PODS:
-  - DimoLogo (0.2.0):
-    - MBProgressHUD (~> 1.1)
-  - MBProgressHUD (1.1.0)
+  - DimoLogo (0.4.0):
+    - DimoLogo/Core (= 0.4.0)
+  - DimoLogo/Core (0.4.0)
+  - DimoLogo/HUD (0.4.0):
+    - DimoLogo/Core
+    - MBProgressHUD (~> 1.2)
+  - MBProgressHUD (1.2.0)
 
 DEPENDENCIES:
   - DimoLogo (from `../`)
+  - DimoLogo/HUD (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - MBProgressHUD
 
 EXTERNAL SOURCES:
@@ -15,9 +20,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DimoLogo: 047300aafd3f2a9c00a9f0eeb19ebbfb98fcfcbe
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  DimoLogo: 9b4f72396c73fe8e50ac8d159ad1e52c66b86314
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
 
-PODFILE CHECKSUM: 0ab81f164e3a11339050824bcd971857054793c9
+PODFILE CHECKSUM: af7a27608c9d6ea80b5c944add372776de301e76
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.10.1
