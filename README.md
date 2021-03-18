@@ -1,9 +1,11 @@
 # DimoLogo
 
-<!-- [![CI Status](https://img.shields.io/travis/luckytianyiyan/DimoLogo.svg?style=flat)](https://travis-ci.org/luckytianyiyan/DimoLogo) -->
+<!-- [![CI Status](https://img.shields.io/travis/ty0x2333/DimoLogo.svg?style=flat)](https://travis-ci.org/ty0x2333/DimoLogo) -->
 [![Version](https://img.shields.io/cocoapods/v/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
 [![License](https://img.shields.io/cocoapods/l/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
 [![Platform](https://img.shields.io/cocoapods/p/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
+
+![preview](Resource/preview.gif)
 
 ## Example
 
@@ -22,7 +24,7 @@ pod 'DimoLogo'
 
 ## Author
 
-ty0x2333, luckytianyiyan@gmail.com
+ty0x2333, ty0x2333@gmail.com
 
 ## License
 

@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  DimoLogo
 //
-//  Created by luckytianyiyan on 10/05/2018.
-//  Copyright (c) 2018 luckytianyiyan. All rights reserved.
+//  Created by ty0x2333 on 10/05/2018.
+//  Copyright (c) 2018 ty0x2333. All rights reserved.
 //
 
 import UIKit

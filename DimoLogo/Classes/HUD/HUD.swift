@@ -2,7 +2,7 @@
 //  HUD.swift
 //  DimoLogo
 //
-//  Created by luckytianyiyan on 2018/10/5.
+//  Created by ty0x2333 on 2018/10/5.
 //
 
 import Foundation
