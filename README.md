@@ -13,7 +13,7 @@
 # DimoLogo
 
 <!-- [![CI Status](https://img.shields.io/travis/ty0x2333/DimoLogo.svg?style=flat)](https://travis-ci.org/ty0x2333/DimoLogo) -->
-[![codebeat badge](https://codebeat.co/badges/d9b42d4f-1df8-47e3-bfc4-d74115e650c9)](https://codebeat.co/a/inkonote/projects/github-com-inkonote-dimologo-master)
+[![codebeat badge](https://codebeat.co/badges/310f83fd-25ba-45ff-b22e-af40f098460b)](https://codebeat.co/projects/github-com-inkonote-dimologo-master)
 [![Version](https://img.shields.io/cocoapods/v/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
 [![License](https://img.shields.io/cocoapods/l/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
 [![Platform](https://img.shields.io/cocoapods/p/DimoLogo.svg?style=flat)](https://cocoapods.org/pods/DimoLogo)
